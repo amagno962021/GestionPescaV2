@@ -1,0 +1,253 @@
+<mvc:View controllerName="tasa.registroeventospesca.controller.Lista" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+						<SplitApp id="SpliApp" initialDetail="detail" initialMaster="master1">
+							<masterPages>
+								<Page id="master1" title="Tipo Embarcacion" backgroundDesign="List" class="sapUiStdPage">
+									<List id="idListaTipoEmb" growing="true" growingThreshold="20" growingScrollToLoad="true" visible="true" items="{path: '/'}">
+										<headerToolbar>
+											<Toolbar enabled="true" visible="true" width="" design="Solid">
+												<content>
+													<SearchField placeholder="Buscar" liveChange="onFilterEmba" showSearchButton="true" visible="true" width="100%"/>
+												</content>
+											</Toolbar>
+										</headerToolbar>
+										<ObjectListItem title="{DESCR}" icon="sap-icon://sap-box" type="Navigation" press=".onNavToMaster"></ObjectListItem>
+									</List>
+								</Page>
+								<Page id="master2" title="Plantas" backgroundDesign="List" class="sapUiStdPage" showNavButton="true" navButtonPress=".onBackToMaster">
+									<List id="idListaPlantas" growing="true" growingThreshold="20" growingScrollToLoad="true" visible="true" items="{path: '/'}">
+										<headerToolbar>
+											<Toolbar enabled="true" visible="true" width="" design="Solid">
+												<content>
+													<SearchField placeholder="Buscar" liveChange="onFilterPlant" showSearchButton="true" visible="true" width="100%"/>
+												</content>
+											</Toolbar>
+										</headerToolbar>
+										<ObjectListItem title="{DESCR}" icon="sap-icon://sap-box" type="Navigation" press=".onNavToDetail"></ObjectListItem>
+									</List>
+								</Page>
+							</masterPages>
+							<detailPages>
+								<Page title="Detalle Pesca">
+									<content>
+										<ObjectHeader id="idObjectHeader" icon="sap-icon://factory" numberState="None" titleActive="false" backgroundDesign="Translucent"
+											condensed="false" visible="true"></ObjectHeader>
+										<IconTabBar expandable="false" expanded="true" applyContentPadding="false" backgroundDesign="Solid" upperCase="false" visible="true"
+											selectedKey="Ok">
+											<items>
+												<IconTabFilter icon="sap-icon://person-placeholder" iconColor="Default" text="Propios" design="Vertical" showAll="false"
+													textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+													<content>
+														<Table id="tblMareas" width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="5"
+															growingScrollToLoad="true" class="sapUiResponsiveMargin" items="{path:'/', templateShareable:true}">
+															<infoToolbar/>
+															<headerToolbar>
+																<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+																	<content>
+																		<Title text="Lista de Mareas"/>
+																		<ToolbarSpacer width=""/>
+																		<Button text="Nueva Marea" type="Emphasized" iconFirst="true" icon="" width="auto" enabled="true" visible="true" iconDensityAware="false"
+																			press="onNuevaMarea"/>
+																		<Button text="Actualizar" type="Emphasized" iconFirst="true" icon="" width="auto" enabled="true" visible="true" iconDensityAware="false"
+																			press="onActualizaMareas"/>
+																		<!--<Button text="Pesca Declarada" type="Emphasized" iconFirst="true" icon="" width="auto" enabled="true" visible="true" iconDensityAware="false" press=""/>-->
+																	</content>
+																</OverflowToolbar>
+															</headerToolbar>
+															<columns>
+																<Column width="70px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Marea" width="auto" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="80px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Embarcación" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="80px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Mot. Marea" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Pesc. Dcl." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Fe. Arribo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Ho. Arribo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Estado Marea" width="auto" maxLines="2" wrapping="true" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+															</columns>
+															<items>
+																<ColumnListItem type="Navigation" press="onNavToDetailMaster">
+																	<cells>
+																		<Text text="{NRMAR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{NMEMB}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{DSMMA}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{path: 'CNPSM', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}" width="auto" maxLines="1"
+																			wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{FEARR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{HOARR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{ESMAR}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</cells>
+																</ColumnListItem>
+															</items>
+														</Table>
+													</content>
+												</IconTabFilter>
+												<IconTabSeparator icon="" iconDensityAware="false"/>
+												<IconTabFilter icon="sap-icon://group" iconColor="Default" text="Terceros" count="30" design="Vertical" showAll="false"
+													textDirection="Inherit" enabled="true" visible="true" iconDensityAware="false">
+													<content>
+														<Table width="auto" noDataText="No data" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true"
+															class="sapUiResponsiveMargin" items="{path:'/mareaSet', templateShareable:true}">
+															<infoToolbar/>
+															<headerToolbar>
+																<OverflowToolbar width="auto" height="auto" design="Transparent" visible="true" enabled="true">
+																	<content>
+																		<ToolbarSpacer width=""/>
+																		<OverflowToolbarButton text="Sort" type="Transparent" icon="sap-icon://sort" iconFirst="true" width="auto" enabled="true" visible="true"
+																			iconDensityAware="true"/>
+																		<OverflowToolbarButton text="Filter" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true"
+																			iconDensityAware="false"/>
+																		<OverflowToolbarButton text="Group" type="Transparent" icon="sap-icon://group-2" iconFirst="true" width="auto" enabled="true" visible="true"
+																			iconDensityAware="false"/>
+																		<OverflowToolbarButton text="Settings" type="Transparent" icon="sap-icon://action-settings" iconFirst="true" width="auto" enabled="true"
+																			visible="true" iconDensityAware="false"/>
+																	</content>
+																</OverflowToolbar>
+															</headerToolbar>
+															<columns>
+																<Column width="50px" hAlign="Center" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline"
+																	mergeDuplicates="false">
+																	<header>
+																		<Text text="Nro." width="35px" maxLines="1" wrapping="false" textAlign="Center" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="100px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Marea" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Embarcacion" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Mot. Marea" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Est. Ope." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Pesc. Dec." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="150px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Fecha/Hora Arribo" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="auto" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="Estado" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+																<Column width="50px" hAlign="Left" vAlign="Middle" minScreenWidth="Tablet" demandPopin="true" popinDisplay="Inline" mergeDuplicates="false">
+																	<header>
+																		<Text text="" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																	</header>
+																	<footer/>
+																</Column>
+															</columns>
+															<items>
+																<ColumnListItem type="Active">
+																	<cells>
+																		<Text text="{ID}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{marea}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{embarcaion}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{mot_marea}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{est_ope}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{path: 'pesc_dec', type: 'sap.ui.model.type.Float', formatOptions: { maxFractionDigits: 2 }}" width="auto" maxLines="1"
+																			wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{fecha_hora_arribo}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Text text="{estado}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+																		<Button text="" type="Default" icon="sap-icon://edit" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+																		<Button text="" type="Default" icon="sap-icon://sys-cancel" iconFirst="true" width="auto" enabled="true" visible="true"
+																			iconDensityAware="false"/>
+																	</cells>
+																</ColumnListItem>
+															</items>
+														</Table>
+													</content>
+												</IconTabFilter>
+											</items>
+											<content>
+												<Text text="Tab Bar Content goes here ..." width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit"
+													visible="true"/>
+											</content>
+										</IconTabBar>
+									</content>
+									<footer>
+										<OverflowToolbar width="auto" height="auto" design="Auto" enabled="true" visible="true">
+											<content>
+												<ToolbarSpacer width=""/>
+												<Button text="Nueva Marea" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+												<Button text="Actualizar" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+												<Button text="Pesca Declarada" type="Emphasized" iconFirst="true" width="auto" enabled="true" visible="true" iconDensityAware="false"/>
+											</content>
+										</OverflowToolbar>
+									</footer>
+								</Page>
+							</detailPages>
+						</SplitApp>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>
